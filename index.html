@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AI shopping assistant demo with conversational product discovery, ranking, comparison, and cart preview."
+    />
+    <title>CartPilot AI 购物助手 Demo</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="assistant-panel" aria-label="AI 购物助手">
+        <nav class="topbar" aria-label="Demo 导航">
+          <a class="brand" href="#" aria-label="CartPilot 首页">
+            <span class="brand-mark">CP</span>
+            <span>
+              <strong>CartPilot</strong>
+              <small>AI Shopping Demo</small>
+            </span>
+          </a>
+          <button class="icon-button" id="resetDemo" type="button" title="重置 demo" aria-label="重置 demo">
+            ↻
+          </button>
+        </nav>
+
+        <div class="hero">
+          <p class="kicker">AI 购物助手</p>
+          <h1>把“我想买点什么”变成可比较、可下单的答案。</h1>
+          <p>
+            输入预算、场景、偏好或顾虑，CartPilot 会用本地模拟数据给出推荐理由、风险提示和组合建议。
+          </p>
+        </div>
+
+        <div class="prompt-chips" aria-label="快捷需求">
+          <button type="button" data-prompt="我想买一台适合通勤和咖啡店办公的轻薄电脑，预算 1200 美元以内">
+            通勤电脑
+          </button>
+          <button type="button" data-prompt="帮我挑一副适合跑步和电话会议的降噪耳机">
+            跑步耳机
+          </button>
+          <button type="button" data-prompt="我想给新家买一台好清洁、适合宠物家庭的空气净化器">
+            宠物家庭
+          </button>
+        </div>
+
+        <section class="chat-card" aria-label="购物助手对话">
+          <div class="chat-log" id="chatLog" aria-live="polite"></div>
+          <form class="composer" id="assistantForm">
+            <input
+              id="assistantInput"
+              name="message"
+              type="text"
+              autocomplete="off"
+              placeholder="描述你的需求，比如：预算 800 美元、送父母、要简单易用..."
+              aria-label="输入购物需求"
+            />
+            <button type="submit">发送</button>
+          </form>
+        </section>
+
+        <section class="controls" aria-label="偏好控制">
+          <div>
+            <label for="budgetRange">预算上限</label>
+            <strong id="budgetLabel">$1,200</strong>
+            <input id="budgetRange" type="range" min="120" max="1800" step="20" value="1200" />
+          </div>
+          <div>
+            <label for="prioritySelect">优先级</label>
+            <select id="prioritySelect">
+              <option value="balanced">综合平衡</option>
+              <option value="value">性价比</option>
+              <option value="premium">质感体验</option>
+              <option value="portable">轻便省心</option>
+            </select>
+          </div>
+        </section>
+      </section>
+
+      <section class="shop-panel" aria-label="推荐商品">
+        <div class="status-strip">
+          <div>
+            <span>当前意图</span>
+            <strong id="intentLabel">探索购物需求</strong>
+          </div>
+          <div>
+            <span>推荐可信度</span>
+            <strong id="confidenceLabel">84%</strong>
+          </div>
+          <div>
+            <span>购物车</span>
+            <strong id="cartCount">0 件</strong>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <p class="kicker">Ranked Picks</p>
+            <h2>AI 推荐清单</h2>
+          </div>
+          <div class="view-tabs" role="tablist" aria-label="推荐视图">
+            <button class="active" type="button" data-view="cards">卡片</button>
+            <button type="button" data-view="compare">对比</button>
+          </div>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+        <div class="compare-panel" id="comparePanel" hidden></div>
+
+        <aside class="insight-panel" aria-label="AI 洞察">
+          <div>
+            <p class="kicker">Decision Brief</p>
+            <h2>购买建议</h2>
+          </div>
+          <div id="insightText"></div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

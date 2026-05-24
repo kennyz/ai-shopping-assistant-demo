@@ -16,9 +16,14 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
   background:
@@ -45,6 +50,7 @@ button {
 
 .assistant-panel,
 .shop-panel {
+  min-width: 0;
   padding: clamp(20px, 3vw, 44px);
 }
 
@@ -80,6 +86,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
   color: inherit;
   text-decoration: none;
 }
@@ -126,6 +133,7 @@ label {
 .hero {
   margin-top: auto;
   max-width: 660px;
+  min-width: 0;
 }
 
 .hero h1 {
@@ -165,6 +173,7 @@ label {
   min-height: 38px;
   padding: 0 14px;
   border-radius: 999px;
+  white-space: nowrap;
 }
 
 .prompt-chips button {
@@ -181,6 +190,7 @@ label {
 }
 
 .chat-card {
+  min-width: 0;
   overflow: hidden;
 }
 
@@ -199,6 +209,7 @@ label {
   border: 1px solid var(--line);
   background: #fff;
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .message.user {
@@ -234,6 +245,7 @@ label {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   padding: 16px;
+  min-width: 0;
 }
 
 .controls div {
@@ -258,6 +270,7 @@ input[type="range"] {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 18px;
+  min-width: 0;
   box-shadow: none;
 }
 
@@ -279,6 +292,7 @@ input[type="range"] {
   border: 1px solid var(--line);
   background: rgba(255, 250, 241, 0.72);
   border-radius: 999px;
+  flex-wrap: nowrap;
 }
 
 .view-tabs button {
@@ -301,6 +315,7 @@ input[type="range"] {
   display: grid;
   grid-template-rows: 190px auto;
   min-height: 430px;
+  min-width: 0;
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--panel);
@@ -341,6 +356,7 @@ input[type="range"] {
   margin: 0;
   font-size: 1.35rem;
   line-height: 1.08;
+  overflow-wrap: anywhere;
 }
 
 .price {
@@ -386,9 +402,11 @@ input[type="range"] {
 }
 
 .compare-panel {
+  max-width: 100%;
   overflow: auto;
   border: 1px solid var(--line);
   background: var(--panel);
+  -webkit-overflow-scrolling: touch;
 }
 
 .compare-panel table {
@@ -414,6 +432,7 @@ input[type="range"] {
   grid-template-columns: 0.7fr 1.3fr;
   gap: 18px;
   padding: 20px;
+  min-width: 0;
   box-shadow: none;
 }
 
@@ -435,10 +454,11 @@ input[type="range"] {
 @media (max-width: 980px) {
   .shell {
     grid-template-columns: 1fr;
+    min-height: 0;
   }
 
   .assistant-panel {
-    min-height: 760px;
+    min-height: min(760px, 100svh);
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
@@ -449,15 +469,73 @@ input[type="range"] {
 }
 
 @media (max-width: 680px) {
+  body {
+    background:
+      linear-gradient(135deg, rgba(36, 92, 69, 0.1), transparent 42%),
+      var(--paper);
+  }
+
   .assistant-panel,
   .shop-panel {
-    padding: 18px;
+    padding: 16px;
+  }
+
+  .assistant-panel {
+    min-height: auto;
+    gap: 16px;
+    background-position: 58% center;
   }
 
   .topbar,
   .section-heading {
     align-items: flex-start;
     flex-direction: column;
+    gap: 12px;
+  }
+
+  .topbar {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    margin-top: 20px;
+  }
+
+  .hero h1 {
+    max-width: 100%;
+    font-size: clamp(2.15rem, 10vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .hero p:last-child {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .prompt-chips {
+    flex-wrap: nowrap;
+    margin-inline: -16px;
+    padding: 0 16px 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .prompt-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .prompt-chips button,
+  .composer button,
+  .product-actions button {
+    min-height: 44px;
   }
 
   .controls,
@@ -471,7 +549,95 @@ input[type="range"] {
     grid-template-columns: 1fr;
   }
 
+  .chat-log {
+    height: clamp(220px, 46svh, 340px);
+    padding: 14px;
+  }
+
+  .message {
+    max-width: 94%;
+  }
+
+  .status-strip {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .status-strip strong {
+    font-size: 1rem;
+  }
+
+  .section-heading h2,
+  .insight-panel h2 {
+    font-size: clamp(1.7rem, 9vw, 2.55rem);
+    line-height: 1;
+  }
+
+  .view-tabs {
+    width: 100%;
+  }
+
+  .view-tabs button {
+    flex: 1;
+    min-height: 42px;
+  }
+
   .product-card {
+    min-height: 0;
     grid-template-rows: 170px auto;
+  }
+
+  .product-title {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .product-title h3 {
+    font-size: 1.24rem;
+  }
+
+  .product-actions {
+    flex-direction: column;
+  }
+
+  .compare-panel {
+    margin-inline: -16px;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .compare-panel th,
+  .compare-panel td {
+    padding: 12px;
+  }
+
+  .insight-panel {
+    gap: 12px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 390px) {
+  .assistant-panel,
+  .shop-panel {
+    padding: 14px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 9.5vw, 2.45rem);
+  }
+
+  .prompt-chips {
+    margin-inline: -14px;
+    padding-inline: 14px;
+  }
+
+  .chat-log {
+    height: 230px;
+  }
+
+  .compare-panel {
+    margin-inline: -14px;
   }
 }
